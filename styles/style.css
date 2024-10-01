@@ -1,0 +1,78 @@
+html, body {
+    height: 100svh;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, a, li, div {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+    /* column-count: 2; */
+}
+
+.upload-item {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    /* break-inside: avoid; */
+}
+
+pre {
+    border: 0.05rem solid #33333341;
+    padding: 0.5rem;
+    margin: 1rem 0 1rem 0;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    text-align: justify;
+}
+
+footer {
+    background-color: #333;
+    width: 100%;
+}
+
+footer * {
+    white-space: nowrap;     
+    overflow: hidden;        
+    text-overflow: ellipsis;
+    margin: 0.4rem;
+    color: #fff;
+}
+
+.attributions-title {
+    font-size: x-small;
+}
+
+.attributions {
+    font-size: xx-small;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .upload-item {
+        min-width: 100%;
+    }
+}
