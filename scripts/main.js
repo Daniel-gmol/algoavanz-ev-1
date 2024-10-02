@@ -178,3 +178,5 @@ function highlightRandom(){
     textArea.innerHTML = highlightedText;
 }
 
+//TODO: change to search button, add search functionality and add all the other functionalities
+document.getElementById("search-button").addEventListener("click", highlightRandom);
