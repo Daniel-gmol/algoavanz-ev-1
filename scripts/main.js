@@ -82,6 +82,28 @@ function cleanTextArea(textAreaId) {
   const cleanText = textArea.innerText;
   textArea.textContent = cleanText;
 }
+
+function highlightPalindome() {
+  cleanTextArea("display-text-file-1");
+  const textArea = document.getElementById("display-text-file-1");
+  const textContent = textArea.textContent;
+  const longestPalindrome = findLongestPalindrome(textContent);
+  const startIndex = textContent.indexOf(longestPalindrome); //TODO: replace by Z or kmp
+  // TODO: create for loop to find all end indices associated to all start indices and then highlight
+  const endIndex = startIndex + longestPalindrome.length;
+  const highlightedText =
+    textContent.substring(0, startIndex) +
+    "<mark style='background-color: #4CE45A'>" +
+    longestPalindrome +
+    "</mark>" +
+    textContent.substring(endIndex);
+  textArea.innerHTML = highlightedText;
+}
+
+document
+  .getElementById("palindrome-button")
+  .addEventListener("click", highlightPalindome);
+
 //TODO: review algorithm
 //Manacher's Algorithm
 function findLongestPalindrome(s) {
