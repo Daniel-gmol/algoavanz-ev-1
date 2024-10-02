@@ -85,4 +85,25 @@ function cleanTextArea(textAreaId) {
   }
 }
 
+function selectRandom(text) {
+    const words = text.split(" ");
+    const randomIndex = Math.floor(Math.random() * words.length);
+    return words[randomIndex];
+}
+
+function highlightRandom(){
+    cleanTextArea("display-text-file-1");
+    const textArea = document.getElementById("display-text-file-1");
+    const textContent = textArea.textContent;
+    const randomWord = selectRandom(textContent);
+    const startIndex = textContent.indexOf(randomWord);
+    const endIndex = startIndex + randomWord.length;
+    const highlightedText =
+      textContent.substring(0, startIndex) +
+      "<mark style='background-color: #FFFFF'>" +
+      randomWord +
+      "</mark>" +
+      textContent.substring(endIndex);
+    textArea.innerHTML = highlightedText;
+}
 
