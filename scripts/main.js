@@ -1,36 +1,82 @@
-function validateFile(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const fileName = file.name;
-    const fileExtension = fileName.split(".").pop().toLowerCase();
+let isFile1Uploaded = false;
+let isFile2Uploaded = false;
 
-    if (fileExtension !== "txt") {
-      alert("Please upload a .txt file");
-      event.target.value = "";
-    } else {
-      console.log("File uploaded successfully");
-    }
+function validateFile(file) {
+  if (!file) return false;
+  const fileName = file.name;
+  const fileExtension = fileName.split(".").pop().toLowerCase();
+
+  if (fileExtension !== "txt") {
+    alert("Please upload a .txt file");
+    return false;
+  }
+
+  console.log("File uploaded successfully");
+  return true;
+}
+
+function showText(file, textAreaId) {
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const text = e.target.result;
+    document.getElementById(textAreaId).textContent = text;
+  };
+
+  reader.onerror = function (e) {
+    alert("File error");
+  };
+
+  reader.readAsText(file);
+}
+
+function handleFileUpload(event, textAreaId) {
+  const file = event.target.files[0];
+
+  if (!validateFile(file)) return;
+
+  showText(file, textAreaId);
+
+  if (event.target.id === "upload-text-file-1") {
+    isFile1Uploaded = true;
+  } else if (event.target.id === "upload-text-file-2") {
+    isFile2Uploaded = true;
+  }
+
+  checkUploadStatus();
+}
+
+function checkUploadStatus() {
+  const submitButton = document.getElementById("similarity-button");
+  if (isFile1Uploaded && isFile2Uploaded) {
+    submitButton.disabled = false;
+  } else {
+    submitButton.disabled = true;
+  }
+
+  const palindromeButton = document.getElementById("palindrome-button");
+  const searchButton = document.getElementById("search-button");
+  const forwardButton = document.getElementById("forward-button");
+  const backwardButton = document.getElementById("backward-button");
+  if (isFile1Uploaded) {
+    palindromeButton.disabled = false;
+    searchButton.disabled = false;
+    forwardButton.disabled = false;
+    backwardButton.disabled = false;
   }
 }
 
-function showText(event, textArea) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const text = e.target.result;
-      document.getElementById(textArea).textContent = text;
-    };
-    reader.readAsText(file);
+document
+  .getElementById("upload-text-file-1")
+  .addEventListener("change", function (event) {
+    handleFileUpload(event, "display-text-file-1");
+  });
+
+document
+  .getElementById("upload-text-file-2")
+  .addEventListener("change", function (event) {
+    handleFileUpload(event, "display-text-file-2");
+  });
   }
 }
 
-document.getElementById("upload-text-file-1").addEventListener("change", validateFile);
-document.getElementById("upload-text-file-2").addEventListener("change", validateFile);
 
-document.getElementById("upload-text-file-1").addEventListener("change", function (event) {
-  showText(event, "display-text-file-1");
-});
-document.getElementById("upload-text-file-2").addEventListener("change", function (event) {
-  showText(event, "display-text-file-2");
-});
