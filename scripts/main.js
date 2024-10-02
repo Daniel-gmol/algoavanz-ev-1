@@ -76,6 +76,12 @@ document
   .addEventListener("change", function (event) {
     handleFileUpload(event, "display-text-file-2");
   });
+
+function cleanTextArea(textAreaId) {
+  const textArea = document.getElementById(textAreaId);
+  const cleanText = textArea.innerText;
+  textArea.textContent = cleanText;
+}
   }
 }
 
