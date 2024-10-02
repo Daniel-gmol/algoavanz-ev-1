@@ -11,7 +11,7 @@
     <title>Evidencia 1</title>
 
     <link href="styles/style.css" rel="stylesheet" />
-    <link rel="icons" , href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" , href="images/favicon.ico" type="image/x-icon" />
     <link
       href="https://fonts.googleapis.com/css2?family=Ubuntu"
       rel="stylesheet"
@@ -22,6 +22,21 @@
   <body>
     <main>
       <h1>Evidencia 1</h1>
+
+      <!--SIMILITUD-->
+      <button id="similarity-button" disabled>Similitud</button>
+
+      <!--BUSCAR-->
+      <input type="text" id="search-input" />
+      <button id="search-button" disabled>Buscar</button>
+      <button id="forward-button" disabled>Avanzar</button>
+      <button id="backward-button" disabled>Retroceder</button>
+
+      <!---PALINDROMO-->
+      <button id="palindrome-button" disabled>Palindromo</button>
+
+      <!--AUTO-COMPLETAR-->
+      <input type="text" id="autocomplete-input" />
 
       <div class="upload-section">
         <div class="upload-item">
@@ -36,8 +51,6 @@
           <pre id="display-text-file-2"></pre>
         </div>
       </div>
-
-      <input type="button" value="Similitud" onclick="processFile()" />
     </main>
 
     <!--Referencias y demás-->
