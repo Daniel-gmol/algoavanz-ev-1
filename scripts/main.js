@@ -82,7 +82,56 @@ function cleanTextArea(textAreaId) {
   const cleanText = textArea.innerText;
   textArea.textContent = cleanText;
 }
+//TODO: review algorithm
+//Manacher's Algorithm
+function findLongestPalindrome(s) {
+  // Transform the string to avoid even/odd length issues
+  let t = "#";
+  for (let i = 0; i < s.length; i++) {
+    t += s[i] + "#";
   }
+
+  const n = t.length;
+  const p = new Array(n).fill(0);
+  let c = 0,
+    r = 0; // current center and right edge
+
+  for (let i = 0; i < n; i++) {
+    const mirr = 2 * c - i; // mirror of i with respect to center c
+
+    if (i < r) {
+      p[i] = Math.min(r - i, p[mirr]);
+    }
+
+    // Expand around center i
+    while (
+      i + p[i] + 1 < n &&
+      i - p[i] - 1 >= 0 &&
+      t[i + p[i] + 1] === t[i - p[i] - 1]
+    ) {
+      p[i]++;
+    }
+
+    // Update center and right edge
+    if (i + p[i] > r) {
+      c = i;
+      r = i + p[i];
+    }
+  }
+
+  // Find the maximum element in p
+  let maxLen = 0;
+  let centerIndex = 0;
+  for (let i = 0; i < n; i++) {
+    if (p[i] > maxLen) {
+      maxLen = p[i];
+      centerIndex = i;
+    }
+  }
+
+  // Extract the longest palindrome
+  const start = (centerIndex - maxLen) / 2;
+  return s.substring(start, start + maxLen);
 }
 
 function selectRandom(text) {
