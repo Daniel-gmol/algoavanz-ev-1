@@ -93,77 +93,12 @@ function cleanTextArea(textAreaId) {
 // #endregion
 
 // #region SIMILARITY
-
 document
   .getElementById("similarity-button")
-  .addEventListener("click", findSimilarity2);
+  .addEventListener("click", findSimilarity);
 
+//LCS (Longes Common Substring)
 function findSimilarity() {
-  const textArea1 = document.getElementById("display-text-file-1");
-  const textArea2 = document.getElementById("display-text-file-2");
-  const textContent1 = textArea1.textContent.trim();
-  const textContent2 = textArea2.textContent.trim();
-
-  const n = textContent1.length;
-  const m = textContent2.length;
-
-  // Create DP table with (n+1)x(m+1) dimensions
-  const dp = Array.from({ length: n + 1 }, () => Array(m + 1).fill(""));
-
-  // Fill DP table to find the longest common subsequence
-  for (let i = 1; i <= n; i++) {
-    for (let j = 1; j <= m; j++) {
-      //console.log("j:", j);
-      //console.log("textContent1[i - 1]:", textContent1[i - 1]);
-      if (textContent1[i - 1] === textContent2[j - 1]) {
-        dp[i][j] = dp[i - 1][j - 1] + textContent1[i - 1]; // Concatenate the matching character
-        //console.log("dp[i][j]:", dp[i][j]);
-      } else {
-        dp[i][j] =
-          dp[i - 1][j].length > dp[i][j - 1].length
-            ? dp[i - 1][j]
-            : dp[i][j - 1];
-      }
-    }
-  }
-
-  // The longest common subsequence is in dp[n][m]
-  const longestCommonSubsequence = dp[n][m];
-  console.log("longestCommonSubsequence:", longestCommonSubsequence);
-  console.log(dp[n][m]);
-
-  // Find start index of LCS in textContent1
-  const startIndex1 = textContent1.indexOf(longestCommonSubsequence);
-  const endIndex1 = startIndex1 + longestCommonSubsequence.length;
-
-  // Find start index of LCS in textContent2
-  const startIndex2 = textContent2.indexOf(longestCommonSubsequence);
-  const endIndex2 = startIndex2 + longestCommonSubsequence.length;
-
-  // Highlight the LCS in textContent1
-  console.log("textContent1:", textContent1);
-  const highlightedText1 =
-    textContent1.substring(0, startIndex1) +
-    "<mark class='highlight highlight-blue'>" +
-    longestCommonSubsequence +
-    "</mark>" +
-    textContent1.substring(endIndex1);
-
-  // Update the textarea with highlighted text
-  textArea1.innerHTML = highlightedText1;
-
-  console.log("textContent2:", textContent2);
-  const highlightedText2 =
-    textContent2.substring(0, startIndex2) +
-    "<mark class='highlight highlight-blue'>" +
-    longestCommonSubsequence +
-    "</mark>" +
-    textContent2.substring(endIndex2);
-
-  textArea2.innerHTML = highlightedText2;
-}
-
-function findSimilarity2() {
   const textArea1 = document.getElementById("display-text-file-1");
   const textArea2 = document.getElementById("display-text-file-2");
   const textContent1 = textArea1.textContent.trim();
@@ -176,10 +111,8 @@ function findSimilarity2() {
   let endIndex1 = 0;
   let endIndex2 = 0;
 
-  // Create DP table with (n+1)x(m+1) dimensions
   const dp = Array.from({ length: n + 1 }, () => Array(m + 1).fill(0));
 
-  // Fill DP table to find the longest common subsequence
   for (let i = 1; i <= n; i++) {
     for (let j = 1; j <= m; j++) {
       if (textContent1[i - 1] === textContent2[j - 1]) {
@@ -212,9 +145,9 @@ function findSimilarity2() {
     "</mark>" +
     textContent1.substring(endIndex1);
 
-  // Update the textarea with highlighted text
   textArea1.innerHTML = highlightedText1;
 
+   // Highlight the LCS in textContent2
   const highlightedText2 =
     textContent2.substring(0, endIndex2 - maxLength) +
     "<mark class='highlight highlight-blue'>" +
@@ -224,10 +157,13 @@ function findSimilarity2() {
 
   textArea2.innerHTML = highlightedText2;
 }
-
 // #endregion
 
 // #region PALINDROMES
+document
+  .getElementById("palindrome-button")
+  .addEventListener("click", highlightPalindrome);
+
 function highlightPalindrome() {
   cleanTextArea("display-text-file-1");
   cleanTextArea("display-text-file-2");
@@ -237,8 +173,7 @@ function highlightPalindrome() {
 
   const longestPalindrome = findLongestPalindrome(text);
 
-  const startIndex = text.indexOf(longestPalindrome); //TODO: replace by Z or kmp
-  // TODO: create for loop to find all end indices associated to all start indices and then highlight
+  const startIndex = text.indexOf(longestPalindrome); 
   const endIndex = startIndex + longestPalindrome.length;
   const highlightedText =
     text.substring(0, startIndex) +
@@ -250,11 +185,6 @@ function highlightPalindrome() {
   textArea.innerHTML = highlightedText;
 }
 
-document
-  .getElementById("palindrome-button")
-  .addEventListener("click", highlightPalindrome);
-
-//TODO: review algorithm
 //Manacher's Algorithm
 function findLongestPalindrome(s) {
   // Transform the string to avoid even/odd length issues
@@ -266,16 +196,15 @@ function findLongestPalindrome(s) {
   const n = t.length;
   const p = new Array(n).fill(0);
   let c = 0,
-    r = 0; // current center and right edge
+    r = 0;
 
   for (let i = 0; i < n; i++) {
-    const mirr = 2 * c - i; // mirror of i with respect to center c
+    const mirr = 2 * c - i;
 
     if (i < r) {
       p[i] = Math.min(r - i, p[mirr]);
     }
 
-    // Expand around center i
     while (
       i + p[i] + 1 < n &&
       i - p[i] - 1 >= 0 &&
@@ -284,14 +213,12 @@ function findLongestPalindrome(s) {
       p[i]++;
     }
 
-    // Update center and right edge
     if (i + p[i] > r) {
       c = i;
       r = i + p[i];
     }
   }
 
-  // Find the maximum element in p
   let maxLen = 0;
   let centerIndex = 0;
   for (let i = 0; i < n; i++) {
@@ -301,13 +228,35 @@ function findLongestPalindrome(s) {
     }
   }
 
-  // Extract the longest palindrome
   const start = (centerIndex - maxLen) / 2;
   return s.substring(start, start + maxLen);
 }
 // #endregion
 
 // #region SEARCH
+document
+  .getElementById("search-input")
+  .addEventListener("keydown", function (event) {
+    const searchButton = document.getElementById("search-button");
+    if (event.key === "Enter") {
+      event.preventDefault();
+
+      searchButton.click();
+    }
+  });
+
+document
+  .getElementById("search-button")
+  .addEventListener("click", highlightSearch);
+
+document
+  .getElementById("forward-button")
+  .addEventListener("click", moveForward);
+  
+document
+  .getElementById("backward-button")
+  .addEventListener("click", moveBackward);
+
 function pi_arr(P) {
   const m = P.length;
   let pi = new Array(m).fill(0);
@@ -428,33 +377,9 @@ function updateButtonStates() {
     currentIndex >= matches.length - 1;
   document.getElementById("backward-button").disabled = currentIndex <= 0;
 }
-
-document
-  .getElementById("search-input")
-  .addEventListener("keydown", function (event) {
-    const searchButton = document.getElementById("search-button");
-    if (event.key === "Enter") {
-      event.preventDefault();
-
-      searchButton.click();
-    }
-  });
-
-document
-  .getElementById("search-button")
-  .addEventListener("click", highlightSearch);
-
-document
-  .getElementById("forward-button")
-  .addEventListener("click", moveForward);
-document
-  .getElementById("backward-button")
-  .addEventListener("click", moveBackward);
 // #endregion
 
 // #region TRIES
-
-// Declaring the autocomplete textbox and its functionality
 document
   .getElementById("autocomplete-input")
   .addEventListener("input", autocomplete);
@@ -512,7 +437,6 @@ class Trie {
 }
 
 function autocomplete() {
-  // We get the text from the first upoaded file
   const textArea = document.getElementById("display-text-file-1");
   const textContent = textArea.textContent;
 
