@@ -23,20 +23,26 @@
     <main>
       <h1>Evidencia 1</h1>
 
-      <!--SIMILITUD-->
-      <button id="similarity-button" disabled>Similitud</button>
+      <div class="options">
+        <!--SIMILITUD-->
+        <button id="similarity-button" disabled>Similitud</button>
 
-      <!--BUSCAR-->
-      <input type="text" id="search-input" />
-      <button id="search-button" disabled>Buscar</button>
-      <button id="forward-button" disabled>Avanzar</button>
-      <button id="backward-button" disabled>Retroceder</button>
+        <!---PALINDROMO-->
+        <button id="palindrome-button" disabled>Palindromo</button>
 
-      <!---PALINDROMO-->
-      <button id="palindrome-button" disabled>Palindromo</button>
-
-      <!--AUTO-COMPLETAR-->
-      <input type="text" id="autocomplete-input" />
+        <!--BUSCAR-->
+        <div class="search-options">
+          <button id="search-button" disabled>Buscar</button>
+          <input type="text" id="search-input" />
+          <button id="forward-button" disabled>Avanzar</button>
+          <button id="backward-button" disabled>Retroceder</button>
+        </div>
+        
+        <!--AUTO-COMPLETAR-->
+        <p>Autocompletado</p>
+        <input type="text" id="autocomplete-input" />
+        <ul id="suggestions-list"></ul>
+      </div>
 
       <div class="upload-section">
         <div class="upload-item">
@@ -62,6 +68,9 @@
           title="billiard icons"
           >Billiard icons created by Roundicons Premium - Flaticon</a
         >
+      </p>
+      <p class="attributions">
+        Gracias especiales a todas aquellas LLMs que hicieron esto posible
       </p>
     </footer>
   </body>

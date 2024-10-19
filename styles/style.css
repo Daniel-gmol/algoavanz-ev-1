@@ -1,79 +1,225 @@
-html, body {
-    height: 100svh;
-    margin: 0;
-    padding: 0;
+:root {
+  --highlight-bg: #4ce45a; /* Default background color */
+  --highlight-underline: #17651e; /* Default underline color */
+}
+
+html,
+body {
+  height: 100svh;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-    flex: 1;
-    margin: 0.5rem;
-    padding: 0.5rem;
+  flex: 1;
+  margin: 0.5rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  padding: 0.5rem;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, a, li, div {
-    font-family: 'Ubuntu', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+li,
+div {
+  font-family: "Ubuntu", sans-serif;
+}
+
+.suggestion-element {
+  cursor: pointer;
+}
+
+.suggestion-element:hover {
+  background-color: #f0f0f0;
+}
+
+.suggestion-element:active {
+  background-color: gray;
+  color: white;
+  transition: all 0.1s;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap ;
+  gap: 1rem;
+}
+
+.options > * {
+  margin-right  : 80%;
+}
+
+.options input {
+  padding: 0.6rem;
+  font-size: medium;
+  border-radius: 0.3rem;
+  border: 0.05rem solid #333;
+}
+
+.options button {
+  padding: 1rem;
+  border-radius: 0.3rem;
+  background-color: #333;
+  color: #fff;
+  width: 10rem;
+  cursor: pointer;
+
+  overflow: hidden;
+  white-space: nowrap; 
+  text-overflow: ellipsis;
+  font-size: medium;
+}
+
+.options button:hover {
+  background-color: white;
+  color: #333;
+  transition: all 0.2s;
+}
+
+.options button:disabled {
+  background-color: gray;
+  color: lightgray;
+  cursor: not-allowed;
+  font-style: italic;
+}
+
+.search-options {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  margin-right: 0rem;
+  
+  gap: 1rem;
+}
+
+.search-options input {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .upload-section {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 1rem;
-    /* column-count: 2; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1rem;
+  /* column-count: 2; */
 }
 
 .upload-item {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    /* break-inside: avoid; */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* break-inside: avoid; */
 }
 
 .display-text {
-    border: 0.05rem solid #33333341;
-    border-radius: 0.2rem;
-    padding: 0.5rem;
-    margin: 1rem 0 1rem 0;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    text-align: justify;
+  border: 0.05rem solid #33333341;
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  margin: 1rem 0 1rem 0;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  text-align: justify;
+}
+
+
+.current-highlight {
+  background-color: rgb(247, 135, 37) !important;
+  font-weight: bold;
+}
+
+
+.highlight {
+  background-color: var(--highlight-bg);
+  position: relative;
+  background: linear-gradient(40deg, var(--highlight-bg), transparent);
+  background-size: 200% 100%;
+  animation: backgroundHighlight 2s forwards;
+}
+
+.highlight::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0.1rem;
+  background-color: var(--highlight-underline);
+  animation: underlineHighlight 2s forwards;
+}
+
+@keyframes underlineHighlight {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes backgroundHighlight {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+.highlight-yellow {
+  --highlight-bg: #ffdb33;
+  --highlight-underline: #ffa333;
+}
+
+.highlight-blue {
+  --highlight-bg: #33c4ff;
+  --highlight-underline: #003366;
 }
 
 footer {
-    background-color: #333;
-    width: 100%;
+  background-color: #333;
+  width: 100%;
 }
 
 footer * {
-    white-space: nowrap;     
-    overflow: hidden;        
-    text-overflow: ellipsis;
-    margin: 0.4rem;
-    color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0.4rem;
+  color: #fff;
 }
 
 .attributions-title {
-    font-size: x-small;
+  font-size: x-small;
 }
 
 .attributions {
-    font-size: xx-small;
+  font-size: xx-small;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
-    margin: 0;
+  color: inherit;
+  text-decoration: none;
+  margin: 0;
 }
 
 @media screen and (max-width: 600px) {
-    .upload-item {
-        min-width: 100%;
-    }
+  .upload-item {
+    min-width: 100%;
+  }
 }
